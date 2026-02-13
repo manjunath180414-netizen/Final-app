@@ -12,8 +12,8 @@
   <style>
     body {
       font-family: Poppins;
-      background: #f4f6f9;
       margin: 0;
+      background: linear-gradient(135deg, #4e73df, #1cc88a);
       text-align: center;
     }
 
@@ -24,23 +24,34 @@
       padding: 25px;
       border-radius: 15px;
       background: white;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       text-align: left;
     }
 
-    input, button {
+    .logo {
+      width: 100px;
+      display: block;
+      margin: 20px auto;
+    }
+
+    input {
       width: 100%;
       padding: 12px;
       margin-top: 12px;
       border-radius: 8px;
-      font-family: Poppins;
+      border: 1px solid #ccc;
     }
 
     button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border-radius: 8px;
       border: none;
-      background: #111;
-      color: white;
       font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(90deg,#ff512f,#dd2476);
+      color: white;
     }
 
     iframe {
@@ -50,10 +61,22 @@
       border: none;
       margin-top: 10px;
     }
+
+    h2, h3 {
+      text-align: center;
+    }
+
+    .highlight {
+      color: #dd2476;
+      font-weight: 600;
+    }
   </style>
 </head>
 
 <body>
+
+<img class="logo"
+src="https://play-lh.googleusercontent.com/liyxAROK4jZ1cbft9_b1Et11J7wHCQcbxQepmI2kaHdJjQc05WFPfqShosWSu4Ui8a8q=w240-h480-rw">
 
 <!-- DETAILS -->
 <div id="details-section" class="card">
@@ -65,14 +88,25 @@
 
 <!-- LOGIN -->
 <div id="login-section" class="card" style="display:none;">
-  <h2>Login</h2>
+  <h2>Login to Continue</h2>
   <button onclick="googleLogin()">Login with Google</button>
 </div>
 
 <!-- COURSE -->
 <div id="course-section" class="card" style="display:none;">
-  <h2>SSLC 2026 Crash Course</h2>
-  <p>₹189 Only</p>
+  <h2>🔥 SSLC 2026 CRASH COURSE 🔥</h2>
+  <p class="highlight">🚀 300 HOURS | 30 DAYS INTENSE COACHING</p>
+
+  <p><b>🎯 Target:</b> 90+ Marks in SSLC 2026</p>
+
+  <p>✔️ All Subjects Covered</p>
+  <p>✔️ Live Interactive Classes</p>
+  <p>✔️ Recorded Classes</p>
+  <p>✔️ Most Important Questions</p>
+  <p>✔️ Smart Study Plan</p>
+
+  <h3>₹189 Only</h3>
+
   <button onclick="startPayment()">Enroll Now</button>
 </div>
 
@@ -80,9 +114,10 @@
 <div id="dashboard-section" class="card" style="display:none;">
 
   <h2 id="welcome-text"></h2>
-  <p id="exam-countdown" style="color:#dd2476;"></p>
 
-  <div style="background:#f5f5f5; padding:10px; border-radius:10px;">
+  <p id="exam-countdown" class="highlight"></p>
+
+  <div style="background:#f8f9fc; padding:10px; border-radius:10px;">
     <h3>Your Profile</h3>
     <p id="profile-name"></p>
     <p id="profile-email"></p>
@@ -100,11 +135,12 @@
   <h3 style="margin-top:20px;">Recorded Classes</h3>
   <div id="video-list"></div>
 
-  <button onclick="logoutUser()" style="margin-top:15px;">Logout</button>
+  <button onclick="logoutUser()" style="margin-top:15px; background:#333;">Logout</button>
 
 </div>
 
 <script src="script.js"></script>
 </body>
 </html>
+
 
