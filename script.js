@@ -42,7 +42,17 @@ auth.signInWithRedirect(provider);
 /* AUTH STATE */
 auth.onAuthStateChanged(async (user) => {
 
-  if (!user) return;
+  // Hide everything first
+  document.getElementById("details-section").style.display = "none";
+  document.getElementById("login-section").style.display = "none";
+  document.getElementById("course-section").style.display = "none";
+  document.getElementById("dashboard-section").style.display = "none";
+
+  if (!user) {
+    // If not logged in → show name/phone form
+    document.getElementById("details-section").style.display = "block";
+    return;
+  }
 
   currentUser = user;
   const email = user.email;
@@ -52,21 +62,23 @@ auth.onAuthStateChanged(async (user) => {
 
   if (!doc.exists) {
     await userRef.set({
-      name: localStorage.getItem("name"),
-      phone: localStorage.getItem("phone"),
+      name: localStorage.getItem("name") || user.displayName,
+      phone: localStorage.getItem("phone") || "",
       paid: false
     });
-    showCourse();
+
+    document.getElementById("course-section").style.display = "block";
     return;
   }
 
   if (doc.data().paid === true) {
     showDashboard();
   } else {
-    showCourse();
+    document.getElementById("course-section").style.display = "block";
   }
 
 });
+
 
 /* COURSE */
 function showCourse() {
