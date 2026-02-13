@@ -12,19 +12,19 @@
   <style>
     body {
       font-family: Poppins;
-      margin: 0;
       background: #ffffff;
+      margin: 0;
       text-align: center;
     }
 
     .card {
       width: 90%;
-      max-width: 600px;
+      max-width: 550px;
       margin: 30px auto;
       padding: 25px;
       border-radius: 15px;
       background: white;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
       text-align: left;
     }
 
@@ -52,35 +52,11 @@
       cursor: pointer;
     }
 
-    .primary {
-      background: #111;
-      color: white;
-    }
+    .primary { background:#111; color:white; }
+    .insta { background:#E1306C; color:white; }
+    .youtube { background:#FF0000; color:white; }
+    .big { background:#25D366; color:white; font-size:18px; }
 
-    .insta {
-      background: #E1306C;
-      color: white;
-    }
-
-    .youtube {
-      background: #FF0000;
-      color: white;
-    }
-
-    .big {
-      background: #25D366;
-      color: white;
-      font-size: 18px;
-      padding: 15px;
-    }
-
-    iframe {
-      width: 100%;
-      height: 230px;
-      border-radius: 12px;
-      border: none;
-      margin-top: 10px;
-    }
   </style>
 </head>
 
@@ -106,21 +82,21 @@ src="https://play-lh.googleusercontent.com/liyxAROK4jZ1cbft9_b1Et11J7wHCQcbxQepm
 <!-- COURSE -->
 <div id="course-section" class="card" style="display:none;">
   <h2>🔥 SSLC 2026 CRASH COURSE 🔥</h2>
-  <p>🚀 300 HOURS | 30 DAYS INTENSE COACHING</p>
+  <p>🚀 300 Hours | 30 Days Intensive Coaching</p>
   <p>🎯 Target: 90+ Marks</p>
   <p>✔ All Subjects Covered</p>
   <p>✔ Live + Recorded Classes</p>
-  <p>✔ Important Questions</p>
+  <p>✔ Important Questions & Smart Study Plan</p>
   <h3>₹189 Only</h3>
   <button class="primary" onclick="startPayment()">Enroll Now</button>
 </div>
 
-<!-- AFTER PAYMENT -->
+<!-- ACTIVATION AFTER PAYMENT -->
 <div id="activation-section" class="card" style="display:none;">
   <h2>Activate Your Course</h2>
-  <p>Please complete these steps:</p>
+  <p>Please complete the steps below:</p>
 
-  <button class="insta" onclick="openInstagram()">Follow us on Instagram</button>
+  <button class="insta" onclick="openInstagram()">Follow on Instagram</button>
   <button class="youtube" onclick="openYouTube()">Subscribe on YouTube</button>
 
   <button class="big" onclick="sendWhatsApp()">Request Course Access</button>
@@ -129,10 +105,11 @@ src="https://play-lh.googleusercontent.com/liyxAROK4jZ1cbft9_b1Et11J7wHCQcbxQepm
 <!-- DASHBOARD -->
 <div id="dashboard-section" class="card" style="display:none;">
   <h2 id="welcome-text"></h2>
-  <p>Course Activated ✅</p>
+  <p>Course Activated Successfully ✅</p>
   <button class="primary" onclick="logoutUser()">Logout</button>
 </div>
 
 <script src="script.js"></script>
 </body>
 </html>
+
