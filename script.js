@@ -80,7 +80,7 @@ function hideAll() {
 
 /* PAYMENT */
 function startPayment() {
-  window.open("https://rzp.io/rzp/UMz8reP", "_blank");
+  window.open("https://rzp.io/rzp/Ixa4luk");
   document.getElementById("course-section").style.display="none";
   document.getElementById("activation-section").style.display="block";
 }
