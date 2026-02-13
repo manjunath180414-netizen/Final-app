@@ -93,15 +93,16 @@ async function showDashboard(){
     document.getElementById("daily-message").innerText=
     doc.data().dailyMessage||"";
 
-    const liveLink=doc.data().liveLink||"";
+    const liveLink = doc.data().liveLink || "";
 
-    if(liveLink){
-      document.getElementById("live-container").innerHTML=
-      `<iframe src="${liveLink}" allowfullscreen></iframe>`;
-    }else{
-      document.getElementById("live-container").innerHTML=
-      `<p>Live will start soon ⏳</p>`;
-    }
+if(liveLink && liveLink.includes("youtube")){
+  document.getElementById("live-container").innerHTML =
+  `<iframe src="${liveLink}" allowfullscreen></iframe>`;
+}else{
+  document.getElementById("live-container").innerHTML =
+  `<p>Live will start soon ⏳</p>`;
+}
+
   }
 
   loadMotivation();
