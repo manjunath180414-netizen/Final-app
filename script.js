@@ -57,6 +57,7 @@ async function loadDashboard(){
 }
 
 function startCountdown(dateStr){
+
   if(!dateStr) return;
 
   const examDate = new Date(dateStr).getTime();
@@ -66,14 +67,18 @@ function startCountdown(dateStr){
     const diff = examDate - now;
 
     if(diff > 0){
+
       const days = Math.floor(diff/(1000*60*60*24));
       const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
 
-      document.getElementById("daily-message").innerHTML +=
-      `<br><br>⏳ ${days} Days ${hours} Hours left for Exam`;
+      document.getElementById("countdown").innerText =
+        "⏳ " + days + " Days " + hours + " Hours left for Exam";
+
     }
+
   },1000);
 }
+
 
 async function loadMotivations(){
   const snapshot = await db.collection("motivations").get();
