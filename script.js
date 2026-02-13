@@ -1,116 +1,83 @@
 const firebaseConfig = {
   apiKey: "AIzaSyBWsAx0o5OnNvgxZDtg3JQR_7Cp_pQKdp0",
   authDomain: "hisacade.firebaseapp.com",
-  projectId: "hisacade",
+  projectId: "hisacade"
 };
 
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
-let currentUser=null;
-
-function hideAll(){
-  ["details-section","login-section","course-section","dashboard-section"]
-  .forEach(id=>document.getElementById(id).style.display="none");
-}
-
-function saveDetails(){
-  const name=document.getElementById("name").value;
-  const phone=document.getElementById("phone").value;
-
-  if(!name||!phone){alert("Fill all details");return;}
-
-  localStorage.setItem("name",name);
-  localStorage.setItem("phone",phone);
-
-  hideAll();
-  document.getElementById("login-section").style.display="block";
-}
-
-function googleLogin(){
-  const provider=new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider);
-}
 
 auth.onAuthStateChanged(async(user)=>{
-  hideAll();
-
   if(!user){
-    document.getElementById("details-section").style.display="block";
+    alert("Please login first.");
     return;
   }
 
-  currentUser=user;
-  const email=user.email;
-  const userRef=db.collection("users").doc(email);
-  let doc=await userRef.get();
+  document.getElementById("welcome-text").innerText =
+  "Welcome, " + user.displayName;
 
-  if(!doc.exists){
-    await userRef.set({
-      name:localStorage.getItem("name")||user.displayName,
-      phone:localStorage.getItem("phone")||"",
-      paid:false
-    });
-  }
+  document.getElementById("profile-name").innerText =
+  "Name: " + user.displayName;
 
-  const urlParams=new URLSearchParams(window.location.search);
-  if(urlParams.get("paid")==="1"){
-    await userRef.update({paid:true});
-    window.history.replaceState({},document.title,window.location.pathname);
-  }
+  document.getElementById("profile-email").innerText =
+  "Email: " + user.email;
 
-  doc=await userRef.get();
-
-  if(doc.data().paid===true){
-    showDashboard();
-  }else{
-    document.getElementById("course-section").style.display="block";
-  }
+  loadDashboard();
 });
 
-async function showDashboard(){
-  document.getElementById("dashboard-section").style.display="block";
+async function loadDashboard(){
 
-  document.getElementById("welcome-text").innerText=
-  "Welcome, "+currentUser.displayName;
-
-  document.getElementById("profile-name").innerText=
-  "Name: "+currentUser.displayName;
-
-  document.getElementById("profile-email").innerText=
-  "Email: "+currentUser.email;
-
-  document.getElementById("profile-phone").innerText=
-  "Phone: "+(localStorage.getItem("phone")||"");
-
-  const doc=await db.collection("adminContent").doc("main").get();
+  const doc = await db.collection("adminContent").doc("main").get();
 
   if(doc.exists){
-    document.getElementById("today-time").innerText=
-    doc.data().todayTime||"";
 
-    document.getElementById("daily-message").innerText=
-    doc.data().dailyMessage||"";
+    document.getElementById("today-time").innerText =
+    doc.data().todayTime || "";
+
+    document.getElementById("daily-message").innerText =
+    doc.data().dailyMessage || "";
 
     const liveLink = doc.data().liveLink || "";
 
-if(liveLink && liveLink.includes("youtube")){
-  document.getElementById("live-container").innerHTML =
-  `<iframe src="${liveLink}" allowfullscreen></iframe>`;
-}else{
-  document.getElementById("live-container").innerHTML =
-  `<p>Live will start soon ⏳</p>`;
-}
+    if(liveLink){
+      document.getElementById("live-container").innerHTML =
+      `<iframe src="${liveLink}" allowfullscreen></iframe>`;
+    }else{
+      document.getElementById("live-container").innerHTML =
+      `<p>Live will start soon ⏳</p>`;
+    }
 
+    startCountdown(doc.data().examDate);
   }
 
-  loadMotivation();
+  loadMotivations();
+  loadRecorded();
 }
 
-async function loadMotivation(){
-  const snapshot=await db.collection("motivations").get();
-  const images=[];
+function startCountdown(dateStr){
+  if(!dateStr) return;
+
+  const examDate = new Date(dateStr).getTime();
+
+  setInterval(()=>{
+    const now = new Date().getTime();
+    const diff = examDate - now;
+
+    if(diff > 0){
+      const days = Math.floor(diff/(1000*60*60*24));
+      const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+
+      document.getElementById("daily-message").innerHTML +=
+      `<br><br>⏳ ${days} Days ${hours} Hours left for Exam`;
+    }
+  },1000);
+}
+
+async function loadMotivations(){
+  const snapshot = await db.collection("motivations").get();
+  const images = [];
   snapshot.forEach(doc=>images.push(doc.data().imageUrl));
 
   let index=0;
@@ -123,8 +90,22 @@ async function loadMotivation(){
   }
 }
 
+async function loadRecorded(){
+  const snapshot = await db.collection("videos").get();
+  let html="";
+
+  snapshot.forEach(doc=>{
+    html+=`
+      <p>${doc.data().title}</p>
+      <iframe src="${doc.data().link}" allowfullscreen></iframe>
+    `;
+  });
+
+  document.getElementById("recorded-container").innerHTML = html;
+}
+
 function callSir(){
-  window.location.href="tel:7022322709";
+  window.location.href="tel:+917022322709";
 }
 
 function logoutUser(){
