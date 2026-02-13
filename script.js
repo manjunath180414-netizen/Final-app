@@ -1,4 +1,3 @@
-// 🔥 FIREBASE CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyBWsAx0o5OnNvgxZDtg3JQR_7Cp_pQKdp0",
   authDomain: "hisacade.firebaseapp.com",
@@ -15,8 +14,6 @@ const db = firebase.firestore();
 
 let currentUser = null;
 
-
-// 🔹 HIDE ALL SECTIONS
 function hideAll(){
   document.getElementById("details-section").style.display = "none";
   document.getElementById("login-section").style.display = "none";
@@ -24,14 +21,12 @@ function hideAll(){
   document.getElementById("dashboard-section").style.display = "none";
 }
 
-
-// 🔹 SAVE NAME + PHONE
 function saveDetails(){
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
 
   if(!name || !phone){
-    alert("Please fill all details");
+    alert("Fill all details");
     return;
   }
 
@@ -42,23 +37,21 @@ function saveDetails(){
   document.getElementById("login-section").style.display = "block";
 }
 
-
-// 🔹 GOOGLE LOGIN
 function googleLogin(){
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithPopup(provider)
-    .catch(error => {
+    .then(()=> {
+      console.log("Login successful");
+    })
+    .catch(error=>{
       alert(error.message);
     });
 }
 
-
-// 🔹 AUTH STATE HANDLER
 auth.onAuthStateChanged(async(user)=>{
 
   hideAll();
 
-  // If not logged in → show first form
   if(!user){
     document.getElementById("details-section").style.display = "block";
     return;
@@ -66,53 +59,29 @@ auth.onAuthStateChanged(async(user)=>{
 
   currentUser = user;
   const email = user.email;
-
   const userRef = db.collection("users").doc(email);
-  let doc = await userRef.get();
+  const doc = await userRef.get();
 
-  // First time user
   if(!doc.exists){
     await userRef.set({
       name: localStorage.getItem("name") || user.displayName,
       phone: localStorage.getItem("phone") || "",
       paid: false
     });
-
-    document.getElementById("course-section").style.display = "block";
-    return;
   }
 
-  // 🔥 Razorpay Redirect Detection
-  const urlParams = new URLSearchParams(window.location.search);
-  const paidParam = urlParams.get("paid");
+  const updatedDoc = await userRef.get();
 
-  if(paidParam === "1"){
-    await userRef.update({ paid: true });
-    window.history.replaceState({}, document.title, window.location.pathname);
-  }
-
-  doc = await userRef.get();
-
-  if(doc.data().paid === true){
-    showDashboard();
-  }else{
+  if(updatedDoc.data().paid === true){
+    document.getElementById("dashboard-section").style.display = "block";
+  } else {
     document.getElementById("course-section").style.display = "block";
   }
 
 });
 
-
-// 🔹 SHOW DASHBOARD
-function showDashboard(){
-  document.getElementById("dashboard-section").style.display = "block";
-  document.getElementById("welcome-text").innerText =
-    "Welcome, " + currentUser.displayName;
-}
-
-
-// 🔹 LOGOUT
 function logoutUser(){
   auth.signOut().then(()=>{
-    window.location.href = window.location.pathname;
+    location.reload();
   });
 }
