@@ -77,8 +77,10 @@ function showCourse() {
 /* DASHBOARD */
 async function showDashboard() {
 
-  document.getElementById("course-section").style.display="none";
-  document.getElementById("dashboard-section").style.display="block";
+  document.getElementById("details-section").style.display = "none";
+  document.getElementById("login-section").style.display = "none";
+  document.getElementById("course-section").style.display = "none";
+  document.getElementById("dashboard-section").style.display = "block";
 
   document.getElementById("welcome-text").innerText =
     "Welcome, " + currentUser.displayName;
@@ -97,6 +99,7 @@ async function showDashboard() {
   loadDailyMessage();
   startCountdown();
 }
+
 
 /* LOAD COURSE */
 async function loadCourseData() {
