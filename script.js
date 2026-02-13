@@ -36,7 +36,7 @@ function saveDetails() {
 /* LOGIN */
 function googleLogin() {
   const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider);
+auth.signInWithRedirect(provider);
 }
 
 /* AUTH STATE */
