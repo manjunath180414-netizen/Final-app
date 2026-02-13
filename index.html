@@ -19,12 +19,12 @@
 
     .card{
       width:90%;
-      max-width:550px;
-      margin:30px auto;
-      padding:25px;
+      max-width:600px;
+      margin:25px auto;
+      padding:20px;
       border-radius:15px;
       background:white;
-      box-shadow:0 10px 25px rgba(0,0,0,0.08);
+      box-shadow:0 8px 20px rgba(0,0,0,0.08);
       text-align:left;
     }
 
@@ -54,6 +54,32 @@
       color:white;
     }
 
+    iframe{
+      width:100%;
+      height:230px;
+      border-radius:12px;
+      margin-top:10px;
+      border:none;
+    }
+
+    .call-btn{
+      background:#25D366;
+      margin-top:15px;
+    }
+
+    .footer{
+      text-align:center;
+      font-size:13px;
+      margin-top:20px;
+      color:#666;
+    }
+
+    .motivation-img{
+      width:100%;
+      border-radius:12px;
+      margin-top:10px;
+    }
+
   </style>
 </head>
 
@@ -79,11 +105,6 @@ src="https://play-lh.googleusercontent.com/liyxAROK4jZ1cbft9_b1Et11J7wHCQcbxQepm
 <!-- COURSE -->
 <div id="course-section" class="card" style="display:none;">
   <h2>🔥 SSLC 2026 CRASH COURSE 🔥</h2>
-  <p>🚀 300 Hours | 30 Days Intensive Coaching</p>
-  <p>🎯 Target: 90+ Marks</p>
-  <p>✔ All Subjects Covered</p>
-  <p>✔ Live + Recorded Classes</p>
-  <p>✔ Important Questions</p>
   <h3>₹189 Only</h3>
 
   <div class="razorpay-embed-btn"
@@ -114,9 +135,35 @@ src="https://play-lh.googleusercontent.com/liyxAROK4jZ1cbft9_b1Et11J7wHCQcbxQepm
 
 <!-- DASHBOARD -->
 <div id="dashboard-section" class="card" style="display:none;">
+
   <h2 id="welcome-text"></h2>
-  <p>Course Activated Successfully ✅</p>
+
+  <h3>Today's Timetable</h3>
+  <p id="today-time"></p>
+
+  <div style="background:#f0f7ff;padding:10px;border-radius:10px;">
+    <p id="daily-message"></p>
+  </div>
+
+  <img id="motivation-img" class="motivation-img">
+
+  <h3>Live Class</h3>
+  <div id="live-container"></div>
+
+  <button class="call-btn" onclick="callSir()">Speak to Manjunath Sir</button>
+
+  <h3 style="margin-top:20px;">Profile</h3>
+  <p id="profile-name"></p>
+  <p id="profile-email"></p>
+  <p id="profile-phone"></p>
+
   <button onclick="logoutUser()">Logout</button>
+
+  <div class="footer">
+    Developed by GoSparkMedia <br>
+    © HIS Academy
+  </div>
+
 </div>
 
 <script src="script.js"></script>
